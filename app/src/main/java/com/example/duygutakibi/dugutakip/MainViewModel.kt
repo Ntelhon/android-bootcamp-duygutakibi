@@ -19,9 +19,9 @@ class MainViewModel(
         duyguyuHtmleCevir(duygular, uygulama.resources)
     }
 
-    private val _duyguDurumaYonlendir = MutableLiveData<DuyguDurum?>()
-    val duyguDurumaYonlendir: LiveData<DuyguDurum?>
-        get() = _duyguDurumaYonlendir
+    private val _duyguSecimeYonlendir = MutableLiveData<DuyguDurum?>()
+    val duyguSecimeYonlendir: LiveData<DuyguDurum?>
+        get() = _duyguSecimeYonlendir
 
     private var _snackBarGoster = MutableLiveData<Boolean>()
     val snackBarGoster: LiveData<Boolean>
@@ -32,7 +32,7 @@ class MainViewModel(
     }
 
     fun yonlendirmeTamamlandi() {
-        _duyguDurumaYonlendir.value = null
+        _duyguSecimeYonlendir.value = null
     }
 
     private suspend fun sonDuyguyuVeritabanindanAl(): DuyguDurum? {
@@ -67,7 +67,7 @@ class MainViewModel(
 
             snDuygu.bitisMilisaniyesi = System.currentTimeMillis()
             veritabani.guncelle(snDuygu)
-            _duyguDurumaYonlendir.value = snDuygu
+            _duyguSecimeYonlendir.value = snDuygu
         }
     }
 
@@ -77,6 +77,18 @@ class MainViewModel(
             sonDuygu.value = null
             _snackBarGoster.value = true
         }
+    }
+
+    val baslatbutonunugor = Transformations.map(sonDuygu){
+        it==null
+    }
+
+    val bitirbutonunugor = Transformations.map(sonDuygu){
+        it!=null
+    }
+
+    val temizlebutonunugor = Transformations.map(duygular){
+        it?.isNotEmpty()
     }
 
 }

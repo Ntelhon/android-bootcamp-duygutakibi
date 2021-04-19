@@ -2,7 +2,9 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
+
     <data>
+
         <variable
             name="mainViewModel"
             type="com.example.duygutakibi.dugutakip.MainViewModel" />
@@ -17,10 +19,11 @@
             android:id="@+id/buttonBaslat"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/baslat"
-            android:layout_marginTop="@dimen/dimen16"
             android:layout_marginStart="@dimen/dimen32"
+            android:layout_marginTop="@dimen/dimen16"
+            android:enabled="@{mainViewModel.baslatbutonunugor}"
             android:onClick="@{() -> mainViewModel.duyguTakibiniBaslat()}"
+            android:text="@string/baslat"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -28,33 +31,32 @@
             android:id="@+id/buttonBitir"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/bitir"
-            android:layout_marginEnd="@dimen/dimen32"
             android:layout_marginTop="@dimen/dimen16"
+            android:layout_marginEnd="@dimen/dimen32"
+            android:enabled="@{mainViewModel.bitirbutonunugor}"
             android:onClick="@{() -> mainViewModel.duyguTakibiniDurdur()}"
+            android:text="@string/bitir"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <ScrollView
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/duygu_listesi"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            app:layout_constraintBottom_toTopOf="@+id/buttonTumVeriyiSil"
-            app:layout_constraintTop_toBottomOf="@+id/buttonBaslat" >
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintTop_toBottomOf="@+id/buttonBitir"
+            app:layout_constraintBottom_toTopOf="@+id/buttonTumVeriyiSil">
 
-            <TextView
-                android:id="@+id/textView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@{mainViewModel.duygularString}"/>
-        </ScrollView>
+        </androidx.recyclerview.widget.RecyclerView>
 
         <Button
             android:id="@+id/buttonTumVeriyiSil"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/tum_veriyi_sil"
             android:layout_marginBottom="@dimen/dimen16"
+            android:enabled="@{mainViewModel.temizlebutonunugor}"
             android:onClick="@{() -> mainViewModel.tumVeriyiSil()}"
+            android:text="@string/tum_veriyi_sil"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />

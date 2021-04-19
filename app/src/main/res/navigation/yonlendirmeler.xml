@@ -3,11 +3,33 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/yonlendirmeler"
-    app:startDestination="@id/anaFragment">
-
+    app:startDestination="@id/mainFragment">
     <fragment
-        android:id="@+id/anaFragment"
+        android:id="@+id/mainFragment"
         android:name="com.example.duygutakibi.dugutakip.MainFragment"
         android:label="ana_fragment"
-        tools:layout="@layout/main_fragment" />
+        tools:layout="@layout/main_fragment" >
+        <action
+            android:id="@+id/action_mainFragment_to_duyguSecimFragment"
+            app:destination="@id/duyguSecimFragment"
+            app:enterAnim="@anim/saga_kay"
+            app:popEnterAnim="@anim/saga_kay" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/duyguSecimFragment"
+        android:name="com.example.duygutakibi.dugutakip.DuyguSecimFragment"
+        android:label="DuyguSecimFragment" >
+
+        <argument
+            android:name="duygukimliknumarasi"
+            app:argType="long"/>
+
+        <action
+            android:id="@+id/action_duyguSecimFragment_to_mainFragment"
+            app:destination="@id/mainFragment"
+            app:launchSingleTop="false"
+            app:popUpTo="@id/mainFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
 </navigation>

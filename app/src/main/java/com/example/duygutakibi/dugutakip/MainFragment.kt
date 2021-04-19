@@ -7,10 +7,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.observe
 import androidx.navigation.fragment.findNavController
 import com.example.duygutakibi.R
 import com.example.duygutakibi.databinding.MainFragmentBinding
 import com.example.duygutakibi.veritabani.Veritabani
+import com.google.android.material.snackbar.Snackbar
 
 class MainFragment : Fragment() {
 
@@ -35,40 +37,35 @@ class MainFragment : Fragment() {
 
         veriBagi.mainViewModel = mainViewModel
 
-        /*
-        mainViewModel.duyguDurumaYonlendir.observe(viewLifecycleOwner, { duygu ->
-
+        mainViewModel.duyguSecimeYonlendir.observe(viewLifecycleOwner) { duygu ->
             duygu?.let {
                 this.findNavController().navigate(
-                    DuyguTakipFragmentDirections.actionDuyguTakipFragmentToDuyguDurumFragment(duygu.kimlikNumarasi)
+                    MainFragmentDirections.actionMainFragmentToDuyguSecimFragment(duygu.kimlikNumarasi)
                 )
-                duyguTakipGoruntuModel.yonlendirmeTamamlandi()
+                mainViewModel.yonlendirmeTamamlandi()
             }
-        })
+        }
 
-        duyguTakipGoruntuModel.snackBarGoster.observe(viewLifecycleOwner, {
+        mainViewModel.snackBarGoster.observe(viewLifecycleOwner) {
             if (it == true) { // Observed state is true.
                 // alternatif olarak toast mesajı da gösterilebilir
                 /*
-                Toast.makeText(
-                    context,
-                    getString(R.string.temizlendi_mesaji),
-                    Toast.LENGTH_LONG,
-                ).show()
-                */
+                    Toast.makeText(
+                        context,
+                        getString(R.string.temizlendi_mesaji),
+                        Toast.LENGTH_LONG,
+                    ).show()
+                    */
 
                 Snackbar.make(
                     requireActivity().findViewById(android.R.id.content),
                     getString(R.string.temizlendi_mesaji),
                     Snackbar.LENGTH_SHORT // How long to display the message.
                 ).show()
-                duyguTakipGoruntuModel.snackBarGosterildi()
+                mainViewModel.snackBarGosterildi()
             }
-        })
-        */
+        }
 
         return veriBagi.root
     }
-
-
 }
